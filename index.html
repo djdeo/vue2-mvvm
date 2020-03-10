@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>{{person.name}}</h2>
+      <h2>{{msg}}</h2>
+      <div v-text="person.name"></div>
+      <div v-html="htmlStr"></div>
+      <button v-on:click="changeMsg">v-on点我</button>
+      <button @click="changeMsg">@点我</button>
+      <br />
+      <input type="text" v-model="msg" />
+    </div>
+
+    <script src="./Watcher.js"></script>
+    <script src="./Observer.js"></script>
+    <script src="./Compile.js"></script>
+    <script src="./MVue.js"></script>
+    <script>
+      let vm = new MVue({
+        el: "#app",
+        data: {
+          person: {
+            name: "some名"
+          },
+          text: "text",
+          msg: "this is msg",
+          htmlStr: "<h1>this is html str</h1>"
+        },
+        methods: {
+          changeMsg() {
+            console.log("点击", this);
+            this.htmlStr = "<h2>Changed msg</h2>";
+            this.msg = "changed";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

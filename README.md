@@ -3,4 +3,5 @@
 - [x] Observer.js
 - [x] Compile.js
 - [x] Watcher.js
-- v-model
+- [x] v-model
+- [x] v-bind

@@ -53,7 +53,6 @@ class Compile {
 
   compileText(node) {
     // 编译{{}} v-text
-    console.log(".....node", node.textContent);
     const { textContent } = node;
     if (/\{\{(.+?)\}\}/.test(textContent)) {
       compileUtil["text"](node, textContent, this.vm);
@@ -149,8 +148,17 @@ const compileUtil = {
     if (eventType && fn) node.addEventListener(eventType, fn.bind(vm), false);
   },
 
-  bind(node, expr, vm, attr) {
+  class(node, expr, vm) {
+    this.bind(node, expr, vm, "class");
+  },
+
+  bind(node, expr, vm, dir) {
     // 设置属性
+    let updaterFn = this.updater[dir + "Updater"];
+    updaterFn && updaterFn(node, this.getValue(expr, vm));
+    new Watcher(expr, vm, (value, oldValue) => {
+      updaterFn && updaterFn(node, value, oldValue);
+    });
   },
 
   //视图更新函数
@@ -163,6 +171,13 @@ const compileUtil = {
     },
     modelUpdater(node, value) {
       node.value = value;
+    },
+    classUpdater(node, value, oldValue) {
+      let { className } = node;
+      className = className.replace(oldValue, "").replace(/\s$/, "");
+
+      let space = className && String(value) ? " " : "";
+      node.className = className + space + value;
     }
   }
 };

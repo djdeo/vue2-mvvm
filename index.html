@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .red {
+        color: red;
+      }
+      .bold {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
@@ -11,6 +20,8 @@
       <h2>{{msg}}</h2>
       <div v-text="person.name"></div>
       <div v-html="htmlStr"></div>
+      <p class="red" v-bind:class="isBold">v-bind样式</p>
+      <!--Todo: <p class="red" :class="isBold">:样式</p> -->
       <button v-on:click="changeMsg">v-on点我</button>
       <button @click="changeMsg">@点我</button>
       <br />
@@ -28,9 +39,11 @@
           person: {
             name: "some名"
           },
+          isBold: "bold",
           text: "text",
           msg: "this is msg",
           htmlStr: "<h1>this is html str</h1>"
+          // arr: [1, 2, 3, 4]
         },
         methods: {
           changeMsg() {
